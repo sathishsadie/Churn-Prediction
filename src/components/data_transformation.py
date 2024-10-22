@@ -17,17 +17,19 @@ class DataTransformationConfig:
 
 
 
-class DataTransformation:
+class DataTransformations:
     def __init__(self):
         self.transformation_config = DataTransformationConfig()
 
     def get_data_transformer_object(self,data):
         try:
-            num_cols = data.select_dtypes(['int','float']).columns
-            cat_cols = data.select_dtypes(['object','category']).columns[1:]
-            target_col = cat_cols[-1]
-            cat_cols = cat_cols[:-1]
-            
+            num_cols = data.select_dtypes(['int','float']).columns.tolist()
+            cat_cols = data.select_dtypes(['object','category']).columns[1:-1].tolist()
+            # print(target_col,cat_cols)
+            if 'Churn' in num_cols:
+                num_cols.remove('Churn')
+            if 'Churn' in num_cols:
+                num_cols.remove('Churn')
             num_pipeline = Pipeline(
                 steps=[
                     ('imputer',SimpleImputer(strategy='mean')),
@@ -41,17 +43,16 @@ class DataTransformation:
                     ('target',StandardScaler())
                 ]
             )
-            target_pipeline = Pipeline(
-                steps=[
-                    ('imputer',SimpleImputer(strategy='most_frequent')),
-                    ('encoder',OrdinalEncoder())
-                ]
-            )
+            # target_pipeline = Pipeline(
+            #     steps=[
+            #         ('imputer',SimpleImputer(strategy='most_frequent')),
+            #         ('encoder',OrdinalEncoder())
+            #     ]
+            # )
             preprocessor = ColumnTransformer(
                 transformers=[
                     ('num_pipeline',num_pipeline,num_cols),
-                    ('cat_pipelin',cat_pipeline,cat_cols),
-                    ('target',target_pipeline,target_col)
+                    ('cat_pipeline',cat_pipeline,cat_cols)
                 ]
             )
             logging.info("Preprocessor has been created ...")
@@ -62,10 +63,17 @@ class DataTransformation:
         try : 
             train_df = pd.read_csv(train_path)
             test_df = pd.read_csv(test_path)
+            chur_tr = train_df.iloc[:,-1]
+            chur_te = test_df.iloc[:,-1]
             logging.info("Train and test data has been readed .")
-            preprocessing_obj = self.initiate_data_transformation(self,train_df)
-            train_arr = preprocessing_obj.fit_transform(train_df)
-            test_arr = preprocessing_obj.transform(test_df)
+            preprocessing_obj = self.get_data_transformer_object(train_df)
+            print(train_df.head())
+            print(test_df.head())
+            print('\n columns',test_df.columns)
+            train_arr = preprocessing_obj.fit_transform(train_df.iloc[:,1:])
+            test_arr = preprocessing_obj.transform(test_df.iloc[:,1:])
+            train_arr = np.c_[train_arr,chur_tr.values]
+            test_arr = np.c_[test_arr,chur_te.values]
             save_object(
                 filepath = self.transformation_config.preprocessor_file_obj,
                 obj = preprocessing_obj
