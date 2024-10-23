@@ -4,4 +4,4 @@ seaborn
 pickle
 scikit-learn
 logging
-matplotlib
+pytest
