@@ -1,7 +1,7 @@
 pandas
 numpy 
 seaborn
-pickle
+joblib
 scikit-learn
 logging
 pytest

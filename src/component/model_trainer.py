@@ -11,7 +11,7 @@ from sklearn.metrics import classification_report
 @dataclass
 class ModelTrainerConfig:
     def __init__(self,folder_name='artifacts'):
-        self.train_model_file_path :str = os.path.join(folder_name,'model.pkl')
+        self.train_model_file_path :str = os.path.join(folder_name,'model.joblib')
 
 
 class ModelTrainer:

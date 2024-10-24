@@ -15,7 +15,7 @@ from src.utils import save_object
 class DataTransformationConfig:
     def __init__(self, folder_name="artifacts"):
         self.folder_name = folder_name
-        self.preprocessor_file_obj : str = os.path.join(folder_name,'preprocessor.pkl')
+        self.preprocessor_file_obj : str = os.path.join(folder_name,'preprocessor.joblib')
 
 
 
