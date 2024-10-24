@@ -28,10 +28,10 @@ class DataTransformations:
             num_cols = data.select_dtypes(['int','float']).columns.tolist()
             cat_cols = data.select_dtypes(['object','category']).columns[1:-1].tolist()
             # print(target_col,cat_cols)
-            if 'Churn' in num_cols:
-                num_cols.remove('Churn')
-            if 'Churn' in num_cols:
-                num_cols.remove('Churn')
+            if 'churn' in num_cols:
+                num_cols.remove('churn')
+            if 'churn' in num_cols:
+                num_cols.remove('churn')
             num_pipeline = Pipeline(
                 steps=[
                     ('imputer',SimpleImputer(strategy='mean')),
