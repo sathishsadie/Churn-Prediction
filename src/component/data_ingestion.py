@@ -3,12 +3,9 @@ import os
 import sys
 from sklearn.model_selection import train_test_split
 import pandas as pd
-from dataclasses import dataclass
 from src.exception import CustomException
 from src.component.model_trainer import ModelTrainer 
 from src.component.data_transformation import DataTransformations
-print(os.getcwd())
-import os
 
 class DataIngestionConfig:
     def __init__(self, folder_name="artifacts"):
