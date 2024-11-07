@@ -10,6 +10,7 @@ WORKDIR /app
 COPY app.py /app/app.py
 COPY requirements.txt /app/requirements.txt
 COPY artifacts /app/artifacts
+Run pip install --upgrade pip
 RUN pip install --no-cache-dir --default-timeout=100 -r requirements.txt
 EXPOSE 8501
 CMD ["streamlit","run","app.py"]

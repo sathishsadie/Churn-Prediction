@@ -3,7 +3,7 @@ import joblib
 import pandas as pd
 
 # Load the preprocessing and model from pickle files
-preprocessor_file = 'artifacts\preprocessor.joblib'
+preprocessor_file = r'artifacts/preprocessor.joblib'
 preprocessing = joblib.load(preprocessor_file)
 model_file = r'artifacts/model.joblib'
 model = joblib.load(model_file)
