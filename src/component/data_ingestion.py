@@ -8,14 +8,14 @@ from src.component.model_trainer import ModelTrainer
 from src.component.data_transformation import DataTransformations
 
 class DataIngestionConfig:
-    def __init__(self, folder_name="artifacts"):
+    def __init__(self, folder_name="data"):
         self.folder_name = folder_name
         self.train_data_path: str = os.path.join(self.folder_name, "train.csv")
         self.test_data_path: str = os.path.join(self.folder_name, "test.csv")
         self.raw_data_path: str = os.path.join(self.folder_name, "raw.csv")
 
 class DataIngestion:
-    def __init__(self,folder_name="artifacts"):
+    def __init__(self,folder_name="data"):
         self.ingestion_config = DataIngestionConfig(folder_name)
 
     def intiate_data_ingestion(self,path):
@@ -41,7 +41,7 @@ class DataIngestion:
 
 if __name__ == "__main__":
     data_ingestion = DataIngestion()
-    train_path,test_path = data_ingestion.intiate_data_ingestion(path="artifacts\customer_churn.csv")
+    train_path,test_path = data_ingestion.intiate_data_ingestion(path="data\customer_churn.csv")
     data_transformation = DataTransformations()
     train_arr,test_arr,_ = data_transformation.initiate_data_transformation(train_path,test_path)
     model_trainer = ModelTrainer()

@@ -5,3 +5,5 @@ tests/
 *.pyo
 .vscode/
 src/
+data/
+app.py
