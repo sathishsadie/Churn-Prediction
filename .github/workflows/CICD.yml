@@ -1,0 +1,44 @@
+name: CI-CD workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Chekout code
+        uses: actions/checkout@v2
+
+      - name: Set up the python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+          run: |
+            python -m install --upgrade pip
+            pip install -r requirements.txt
+
+      - name: Run tests
+        run: |
+          pytest
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Chekout code
+        uses: actions/checkout@v2
+
+      - name: Install vercel cli
+        run: npm install -g vercel
+
+      - name: Deploy to Vercel
+        env:
+          VERCEL_TOKEN: ${{secrets.VERCEL_TOKEN}}
+        run: vercel --prod --token=$VERCEL_TOKEN
