@@ -1,0 +1,7 @@
+.git/
+.env/
+tests/
+*.pyc
+*.pyo
+.vscode/
+src/

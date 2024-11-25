@@ -12,5 +12,7 @@ setup(
     'scikit-learn',
     'logging',
     "pytest",
+    "fastapi",
+    "uvicorn[standard]"
     ]
 )
