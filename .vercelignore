@@ -6,4 +6,15 @@ tests/
 .vscode/
 src/
 data/
-app.py
+data/
+models/
+*.tar.gz
+*.zip
+*.csv
+*.h5
+*.pkl
+__pycache__/
+*.pyc
+*.pyo
+*.git/
+loder.py
