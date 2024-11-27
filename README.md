@@ -84,7 +84,7 @@ Once the server is running, you can make a POST request to the `/` endpoint to g
 
 ## Deployed FastAPI Web App
 
-The **Customer Churn Prediction System** has been deployed and is live on **Render**. You can access the deployed API [here]().
+The **Customer Churn Prediction System** has been deployed and is live on **Render**. You can access the deployed API [here](https://churn-prediction-b0og.onrender.com/).
 
 ## Continuous Integration & Deployment (CI/CD)
 
