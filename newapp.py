@@ -44,12 +44,6 @@ def predict_churn(data:dict)-> int:
     preprocessed_data = preprocessor.transform(input_df)
     predictions = model.predict(preprocessed_data)
     return predictions[0]
-# @app.post("/")
-# async def create_item(data: Data):
-#     try:
-#         return {"message": "Data received successfully"}
-#     except ValueError as e:
-#         raise HTTPException(status_code=422, detail=str(e))
     
 
 @app.post("/")

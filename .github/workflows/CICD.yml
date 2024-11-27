@@ -3,24 +3,27 @@ name: CI-CD Workflow
 on:
   push:
     branches:
-      - main
+      - main  # Trigger on pushes to the 'main' branch
   pull_request:
     branches:
-      - main
+      - main  # Trigger on pull requests to the 'main' branch
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout the code from the repository
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # Step 2: Set up Python
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.10'
 
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
@@ -28,6 +31,7 @@ jobs:
           pip install -r dev-requirements.txt
           pip install pytest
 
+      # Step 4: Debug Python Environment
       - name: Debug Python Environment
         run: |
           python --version
@@ -36,20 +40,26 @@ jobs:
           which python
           which pytest
 
+      # Step 5: Run tests
       - name: Run tests
         run: pytest
+
   deploy:
     needs: test
     runs-on: ubuntu-latest
 
     steps:
-      - name: Chekout code
+      # Step 1: Checkout the code from the repository again in the deploy job
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install vercel cli
-        run: npm install -g vercel
-
-      - name: Deploy to Vercel
+      # Step 2: Deploy to Render (trigger deployment via Render API)
+      - name: Deploy to Render
         env:
-          VERCEL_TOKEN: ${{secrets.VERCEL_TOKEN}}
-        run: vercel --prod --token=$VERCEL_TOKEN --yes --name=churn-prediction
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer $RENDER_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{"clearCache": false}' \
+            https://api.render.com/v1/services/YOUR_SERVICE_ID/deploys
